@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Battaglia Pokémon</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f8ff; }
+        .container { margin-top: 50px; }
+        .pokemon { display: inline-block; margin: 20px; }
+        .health-bar { width: 150px; height: 20px; background-color: red; }
+        .health { height: 100%; background-color: green; width: 100%; }
+        .log { margin-top: 20px; min-height: 50px; }
+        button { font-size: 16px; padding: 10px; margin: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Mini Battaglia Pokémon</h1>
+
+        <div class="pokemon">
+            <h2>Pikachu</h2>
+            <div class="health-bar"><div id="hpPikachu" class="health"></div></div>
+            <button onclick="attack('pikachu')">Attacca con Pikachu ⚡</button>
+        </div>
+
+        <div class="pokemon">
+            <h2>Charmander</h2>
+            <div class="health-bar"><div id="hpCharmander" class="health"></div></div>
+            <button onclick="attack('charmander')">Attacca con Charmander 🔥</button>
+        </div>
+
+        <div class="log" id="log"></div>
+    </div>
+
+    <script>
+        let pikachuHP = 100;
+        let charmanderHP = 100;
+
+        function attack(attacker) {
+            let damage = Math.floor(Math.random() * 20) + 5;
+            let defender = attacker === "pikachu" ? "charmander" : "pikachu";
+
+            if (defender === "charmander") {
+                charmanderHP -= damage;
+                if (charmanderHP < 0) charmanderHP = 0;
+                document.getElementById("hpCharmander").style.width = charmanderHP + "%";
+                document.getElementById("log").innerHTML = `⚡ Pikachu attacca! Infligge ${damage} danni!`;
+            } else {
+                pikachuHP -= damage;
+                if (pikachuHP < 0) pikachuHP = 0;
+                document.getElementById("hpPikachu").style.width = pikachuHP + "%";
+                document.getElementById("log").innerHTML = `🔥 Charmander attacca! Infligge ${damage} danni!`;
+            }
+
+            if (pikachuHP === 0) {
+                document.getElementById("log").innerHTML = "🔥 Charmander ha vinto!";
+            } else if (charmanderHP === 0) {
+                document.getElementById("log").innerHTML = "⚡ Pikachu ha vinto!";
+            }
+        }
+    </script>
+
+</body>
+</html>
